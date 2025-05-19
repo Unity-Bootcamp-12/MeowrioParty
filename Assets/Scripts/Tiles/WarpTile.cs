@@ -6,7 +6,7 @@ public class WarpTile : Tile
 {
     [SerializeField] private Tile _targetTile;
 
-    public override void Event(Player player)
+    public override void TileEvent(Player player)
     {
         BoardManager.Instance.StartCoroutine(WaitAndTeleport(player));
     }
@@ -17,6 +17,6 @@ public class WarpTile : Tile
         Debug.Log(player.gameObject.name + "이/가 " + _targetTile.name + "으로 워프");
         player.transform.position = _targetTile.transform.position;
         player.currentTile = _targetTile;
-        _targetTile.Event(player);
+        _targetTile.TileEvent(player);
     }
 }

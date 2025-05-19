@@ -12,7 +12,7 @@ public class StarTile : Tile
         _starEffectPrefab.SetActive(false);
     }
 
-    public override void Event(Player player)
+    public override void TileEvent(Player player)
     {
         if (player.Coin >= 10)
         {

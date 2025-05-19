@@ -11,7 +11,7 @@ public class CoinTile : Tile
         _coinEffectPrefab.SetActive(false);
     }
 
-    public override void Event(Player player)
+    public override void TileEvent(Player player)
     {
         BoardManager.Instance.StartCoroutine(HandleCoinEffect(player));
     }

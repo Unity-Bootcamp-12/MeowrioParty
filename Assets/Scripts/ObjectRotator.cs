@@ -4,13 +4,13 @@ public class ObjectRotator : MonoBehaviour
 {
     private Transform _cameraTransform;
 
-    void Start()
+    private void Start()
     {
         // 메인 카메라 캐싱
         _cameraTransform = Camera.main.transform;
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         // 카메라를 향하도록 회전
         transform.LookAt(transform.position + _cameraTransform.rotation * Vector3.forward,
