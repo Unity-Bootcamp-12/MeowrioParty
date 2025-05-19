@@ -7,6 +7,11 @@ public class StarTile : Tile
     [SerializeField] private int _starChangeAmount = 1;
     [SerializeField] private GameObject _starEffectPrefab;
 
+    private void Awake()
+    {
+        _starEffectPrefab.SetActive(false);
+    }
+
     public override void Event(Player player)
     {
         if (player.Coin >= 10)

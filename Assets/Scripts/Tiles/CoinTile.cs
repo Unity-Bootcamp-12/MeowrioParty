@@ -6,6 +6,11 @@ public class CoinTile : Tile
     [SerializeField] private int _coinChangeAmount; // 양수: 지급, 음수: 차감
     [SerializeField] private GameObject _coinEffectPrefab; // 코인 효과 (선택)
 
+    private void Awake()
+    {
+        _coinEffectPrefab.SetActive(false);
+    }
+
     public override void Event(Player player)
     {
         BoardManager.Instance.StartCoroutine(HandleCoinEffect(player));
