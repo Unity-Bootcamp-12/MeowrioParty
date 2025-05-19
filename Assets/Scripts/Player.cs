@@ -8,7 +8,7 @@ using System;
 
 public class Player : MonoBehaviour
 {
-    public int playerID; //일단 public으로선언언
+    public int playerID; //일단 public으로 선언
     [SerializeField] private InputManagerSO _inputManager;
 
     public Tile currentTile; // COMMENT: 게임 진행과 관련된 부분이므로 BoardManager가 갖고 있어야 함.
@@ -22,6 +22,12 @@ public class Player : MonoBehaviour
     public bool IsMoving { get { return _isMoving; } }
 
     private Animator _animator;
+
+    [SerializeField] private int _coin;
+    [SerializeField] private int _star;
+
+    public int Coin { get { return _coin; } }
+    public int Star { get { return _star; } }
 
     private void Awake()
     {
@@ -45,7 +51,7 @@ public class Player : MonoBehaviour
     public int RollDice()
     {
         _dice.gameObject.SetActive(false);
-        _animator.SetTrigger("Jump");
+        StartCoroutine(RollDiceWithJump());
         return _dice.Roll();
     }
 
@@ -105,5 +111,36 @@ public class Player : MonoBehaviour
             return;
         }
         BoardManager.Instance.OnPlayersInput(this);
-    }    
+    }
+    public IEnumerator RollDiceWithJump()
+    {
+        Debug.Log(gameObject + "Rolled Dice");
+        _dice.gameObject.SetActive(false);
+
+        //_animator.SetTrigger("Jump");
+
+        //Vector3 jumpTarget = transform.position; // 제자리 점프
+        //float jumpPower = 2f;
+        //float duration = 0.5f;
+        //transform.DOJump(jumpTarget, jumpPower, 1, duration);
+
+
+
+        float animTime = _animator.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(animTime);
+        // 문제점 1. 플레이어의 반복적인 움직임 명령을 보드매니저에서 통제하므로
+        //           플레이어의 이동 명령 또한 보드매니저에서 반복문 이전에 통제해야 한다.
+        //           현재는 턴 설정 페이즈에서만 점프하며, 라운드 진행 중에는 점프와 동시에 강제로 이동한다.
+    }
+
+    public void AddCoins(int amount)
+    {
+        _coin += amount;
+        _coin = Mathf.Max(_coin, 0);
+    }
+    public void AddStars(int amount)
+    {
+        _star++;
+        AddCoins(amount);
+    }
 }

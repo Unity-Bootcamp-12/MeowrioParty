@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 5917183932549999484}
   - component: {fileID: 2568970418198401115}
   - component: {fileID: 4586547460464578106}
-  - component: {fileID: -4162932433226052570}
+  - component: {fileID: 8139345376400253225}
   m_Layer: 0
-  m_Name: NormalTile
+  m_Name: CoinMinusTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: aca906328bb33df42b641e07e9b24d7c, type: 2}
+  - {fileID: 2100000, guid: d3e1f22a8ff81cd4a938e384e03a93b1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -109,7 +109,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10, y: 2.220446e-16, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-4162932433226052570
+--- !u!114 &8139345376400253225
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,7 +118,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 923754175567157850}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba8eb544decd94c44b8c95b4ffd7c1e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bfb77adccb3aa04285417ac7b979ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tileIndex: 0
+  _coinChangeAmount: -5
+  _coinEffectPrefab: {fileID: 0}
