@@ -50,7 +50,8 @@ public class Player : MonoBehaviour
 
     public int RollDice()
     {
-        _dice.gameObject.SetActive(false);
+        TurnOffDice();
+        Debug.Log(gameObject + "Rolled Dice");
         StartCoroutine(RollDiceWithJump());
         return _dice.Roll();
     }
@@ -114,8 +115,6 @@ public class Player : MonoBehaviour
     }
     public IEnumerator RollDiceWithJump()
     {
-        Debug.Log(gameObject + "Rolled Dice");
-        _dice.gameObject.SetActive(false);
 
         //_animator.SetTrigger("Jump");
 
