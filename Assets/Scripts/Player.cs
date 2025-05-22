@@ -2,19 +2,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Unity.Netcode;
+using System.Collections;
+using System;
 // COMMENT : 플레이어 이동과 관련된 로직만 처리하면 됨
 // COMMENT : BoardManager가 가야할 Tile을 알려줌
 
 public class Player : NetworkBehaviour
 {
-    public NetworkVariable<ulong> ClientId;
-
-    public int playerID; //일단 public으로선언
     [SerializeField] private InputManagerSO _inputManager;
 
-    public Tile currentTile; // COMMENT: 게임 진행과 관련된 부분이므로 BoardManager가 갖고 있어야 함.
+    [SerializeField] private Dice _dice;
 
-    [SerializeField] public Dice _dice;
     [SerializeField] private List<GameObject> _diceNumberObjects = new List<GameObject>(); // Comment: 아래 변수도 불필요
 
     private bool _isMoving = false;
@@ -31,11 +29,11 @@ public class Player : NetworkBehaviour
 
     private void OnEnable()
     {
-        _inputManager.OnConfirmButtonPerformed += OnDiceInputReceived;
+        _inputManager.OnConfirmButtonPerformed += OnConfirmButton;
     }
     private void OnDisable()
     {
-        _inputManager.OnConfirmButtonPerformed -= OnDiceInputReceived;
+        _inputManager.OnConfirmButtonPerformed -= OnConfirmButton;
     }
 
     void Start()
@@ -43,14 +41,87 @@ public class Player : NetworkBehaviour
         DOTween.Init(false, true, LogBehaviour.Verbose).SetCapacity(200, 50);
     }
 
-    // public int RollDice()
-    // {
-    //     _dice.gameObject.SetActive(false);
-    //     _animator.SetTrigger("Jump");
-    //     return _dice.Roll();
-    // }
+    public override void OnNetworkSpawn()
+    {
+        BoardManager.Instance.OnGameStart += () =>
+        {
+            GameStartSequenceRpc();
+        };
 
-    public void MoveTo(Tile nextTile)
+        BoardManager.Instance.OnSetOrderStart += () =>
+        {
+            SetOrderStartSequenceRpc();
+        };
+
+        BoardManager.Instance.OnBoardGameStart += () =>
+        {
+            BoardGameStartSequenceRpc();
+        };
+
+        BoardManager.Instance.OnNextTurnStart += (clientId) =>
+        {
+            TurnStartSequenceRpc(clientId);
+        };
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void GameStartSequenceRpc()
+    {
+        StartCoroutine(StartPlayCo());
+    }
+
+    IEnumerator StartPlayCo()
+    {
+        float showTime = 2f;
+        _animator.SetBool("isMoving", true);
+        yield return new WaitForSeconds(showTime);
+        _animator.SetBool("isMoving", false);
+        BoardManager.Instance.StartSetOrderState();
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void SetOrderStartSequenceRpc()
+    {
+        _dice.PlayDiceAnimationRpc();
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void PopDiceNumberSequenceRpc(int diceNumber)
+    {
+        StartCoroutine(TurnOnDiceNumberCo(diceNumber));
+    }
+
+    IEnumerator TurnOnDiceNumberCo(int diceNumber)
+    {
+        TurnOnDiceNumber(diceNumber);
+        TurnOffDice();
+        yield return null;
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void BoardGameStartSequenceRpc()
+    {
+        TurnOffDiceNumber();
+        int tileIndex = BoardManager.Instance.GetCurrentTileIndex(NetworkManager.Singleton.LocalClientId);
+        MoveTo(BoardManager.Instance.Board.tiles[tileIndex], () =>
+        {
+            BoardManager.Instance.NextTurnStart();
+        });
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void TurnStartSequenceRpc(int clientId)
+    {
+        if ((int)NetworkManager.Singleton.LocalClientId == clientId)
+        {
+            CameraManager.Instance.ChangeCamera(1);
+            CameraManager.Instance.SetTarget(transform);
+            TurnOnDice();
+            _dice.PlayDiceAnimationRpc();
+        }
+    }
+
+    public void MoveTo(Tile nextTile, Action callback = null)
     {
         if (!_isMoving)
         {
@@ -66,8 +137,7 @@ public class Player : NetworkBehaviour
                     .OnComplete(() =>
                     {
                         _isMoving = false;
-                        currentTile = nextTile;
-
+                        callback?.Invoke();
                         _animator.SetBool("isMoving", false);
                     });
         }
@@ -95,22 +165,27 @@ public class Player : NetworkBehaviour
     {
         _dice.gameObject.SetActive(true);
     }
+
     public void TurnOffDice()
     {
         _dice.gameObject.SetActive(false);
     }
 
-    private void OnDiceInputReceived(object sender, bool isPressed)
+    private void OnConfirmButton(object sender, bool isPressed)
     {
-        if (!isPressed)
-        {
-            return;
-        }
+        if (!isPressed) { return; }
 
         if (IsOwner)
         {
-            BoardManager.Instance.RequestRollDiceServerRpc(NetworkManager.Singleton.LocalClientId);
-            
+            if (BoardManager.Instance.CurrentState == GameState.GameReady)
+            {
+                BoardManager.Instance.ProcessPlayerInput(NetworkManager.Singleton.LocalClientId);
+
+                PopDiceNumberSequenceRpc(BoardManager.Instance.GetDiceNumberForOrder(NetworkManager.Singleton.LocalClientId));
+            }
+            else if (BoardManager.Instance.CurrentState == GameState.GamePlay)
+            {
+            }
         }
     }
 }
