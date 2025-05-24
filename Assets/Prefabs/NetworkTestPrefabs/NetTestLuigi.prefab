@@ -1280,7 +1280,6 @@ MonoBehaviour:
   - {fileID: 7466726235499288063}
   - {fileID: 8355366743039998324}
   - {fileID: 7576538332623048827}
-  currentTile: {fileID: 0}
   moveSpeed: 3
 --- !u!1 &1854675282673894403
 GameObject:
@@ -6136,8 +6135,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbfded1121da9454e9e26a25763518ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minValue: 1
-  maxValue: 6
 --- !u!1 &7876913924767700391
 GameObject:
   m_ObjectHideFlags: 0

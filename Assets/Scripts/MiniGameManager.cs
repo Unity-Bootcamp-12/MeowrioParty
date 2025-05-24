@@ -40,10 +40,27 @@ public class MiniGameManager : NetworkBehaviour
     }
     public override void OnNetworkSpawn()
     {
-        if (!IsOwner) return;
-        StartCoroutine(WaitAndInitialize());
-        
+        Debug.Log(NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject());
+        NetworkObject playerObj = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject();
+        controller = playerObj.GetComponent<PlayerController>();
+        _animator = controller.gameObject.GetComponent<Animator>();
+        _defaultAnimSpeed = _animator.speed;
+        _animator.SetBool("isMoving", true);
+
+        _originalPos = controller.transform.position;
+        if (IsServer)
+        {
+            controller.transform.position = _miniGameStartPos.position;
+            controller.transform.rotation = _miniGameStartPos.rotation;           
+        }
+
+        isReady = true;
+        inputManager.OnConfirmButtonPerformed += GetInput;
+        //StartCoroutine(WaitAndInitialize());
+
     }
+
+    
     private IEnumerator WaitAndInitialize()
     {
         yield return new WaitUntil(() => NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject() != null);
@@ -57,18 +74,16 @@ public class MiniGameManager : NetworkBehaviour
         _originalPos = controller.transform.position;
         controller.transform.position = _miniGameStartPos.position;
         controller.transform.rotation = _miniGameStartPos.rotation;
-
-        inputManager.OnConfirmButtonPerformed += GetInput;
-
         isReady = true;
-
+        inputManager.OnConfirmButtonPerformed += GetInput;
     }
 
     private void Update()
     {
         if (!isReady || isMiniFinished) return;
         Deceleration();
-        Move();
+        if(IsServer)
+            Move();
     }
 
     private void Accelerate()
@@ -98,27 +113,27 @@ public class MiniGameManager : NetworkBehaviour
         _animator.speed = Mathf.Clamp(speedRatio, 0.5f, 2.0f);
     }
 
-    private void CheckFinish()
-    {
-        if (transform.position.x >= _finishLineX)
-        {
-            isMiniFinished = true;
-            _currentSpeed = 0.0f;
-            Debug.Log(gameObject.name + "결승선 도착");
-            // 애니메이션 연출
-            _animator.SetBool("isMoving", false);
-            _animator.speed = _defaultAnimSpeed;
-            // 미니게임 매니저로 게임 끝났다는걸 알림
-            ReturnToOriginalPos();
-        }
-    }
+    // private void CheckFinish()
+    // {
+    //     if (transform.position.x >= _finishLineX)
+    //     {
+    //         isMiniFinished = true;
+    //         _currentSpeed = 0.0f;
+    //         Debug.Log(gameObject.name + "결승선 도착");
+    //         // 애니메이션 연출
+    //         _animator.SetBool("isMoving", false);
+    //         _animator.speed = _defaultAnimSpeed;
+    //         // 미니게임 매니저로 게임 끝났다는걸 알림
+    //         ReturnToOriginalPos();
+    //     }
+    // }
 
-    private void ReturnToOriginalPos()
-    {
-        transform.position = _originalPos;
-        transform.rotation = Quaternion.identity;
-        Debug.Log("원래 위치 복귀");
-    }
+    // private void ReturnToOriginalPos()
+    // {
+    //     transform.position = _originalPos;
+    //     transform.rotation = Quaternion.identity;
+    //     Debug.Log("원래 위치 복귀");
+    // }
     
     private void GetInput(object sender, bool isPressed)
     {
