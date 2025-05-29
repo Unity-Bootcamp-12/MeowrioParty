@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 public enum ETileType
 {
@@ -47,6 +48,7 @@ public class TileController : MonoBehaviour
             case ETileType.CoinPlusTile:
                 LeaderBoardManager.Instance.UpdateCoin(_clientId, eventParam);
                 Debug.Log("Coinplus");
+                PlaySFXClinetRpc(SFXType.Coin);
                 break;
             case ETileType.CoinMinusTile:
                 LeaderBoardManager.Instance.UpdateCoin(_clientId, -eventParam);
@@ -56,6 +58,7 @@ public class TileController : MonoBehaviour
 
                 //LeaderBoardManager.Instance.UpdateStar(_clientId, eventParam);
                 Debug.Log("StarTile");
+                PlaySFXClinetRpc(SFXType.Star);
                 break;
             default:
                 Debug.Log("Coinplus");
@@ -68,5 +71,11 @@ public class TileController : MonoBehaviour
     {
         playerData.MoveTo(targetTile);
         playerController.TransportPlayer(targetTile);
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void PlaySFXClinetRpc(SFXType sfxType)
+    {
+        SoundManager.Instance.PlaySFX(sfxType);
     }
 }

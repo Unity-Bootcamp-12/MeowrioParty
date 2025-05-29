@@ -60,6 +60,7 @@ public class PlayerController : NetworkBehaviour
     IEnumerator RollDiceSequenceCoroutine(int diceValue)
     {
         ToggleDice(false);
+        PlaySFXClinetRpc(SFXType.StopDice);
         TurnOnDiceNumber(diceValue);
         yield return null;
     }
@@ -67,6 +68,7 @@ public class PlayerController : NetworkBehaviour
     public void ToggleDice(bool isOn)
     {
         _diceObj.gameObject.SetActive(isOn);
+        PlaySFXClinetRpc(SFXType.RollingDice);
     }
 
     public void TurnOnDiceNumber(int index)
@@ -92,4 +94,9 @@ public class PlayerController : NetworkBehaviour
         gameObject.transform.position = tile.gameObject.transform.position;
     }
 
+    [Rpc(SendTo.ClientsAndHost)]
+    private void PlaySFXClinetRpc(SFXType sfxType)
+    {
+        SoundManager.Instance.PlaySFX(sfxType);
+    }
 }
