@@ -508,7 +508,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isAnimPlay: 0
-  m_isAnim2Play: 0
   DescTxt: {fileID: 0}
   OKBtn: {fileID: 8168386490006521115}
   CancelBtn: {fileID: 1643076840140590152}

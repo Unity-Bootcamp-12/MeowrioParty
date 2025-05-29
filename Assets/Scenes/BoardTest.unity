@@ -137,7 +137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7127580574682271748, guid: 2ef424a4c25e2e04992ba4c383f918ef, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7127580574682271748, guid: 2ef424a4c25e2e04992ba4c383f918ef, type: 3}
       propertyPath: m_LocalRotation.w
@@ -476,6 +476,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2822656414552483019, guid: 41190817992cb1e408d484b77687eaa2, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2822656414552483019, guid: 41190817992cb1e408d484b77687eaa2, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 2822656414552483019, guid: 41190817992cb1e408d484b77687eaa2, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     - target: {fileID: 9156810553894577742, guid: 41190817992cb1e408d484b77687eaa2, type: 3}
       propertyPath: m_Name
       value: UIManager
@@ -781,7 +793,7 @@ Transform:
   m_GameObject: {fileID: 1763287979}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -942,31 +954,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3770244978903609625, guid: f1aa92239685f164d9f2b7689ccebb03, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17.7342
+      value: -735.6172
       objectReference: {fileID: 0}
     - target: {fileID: 3770244978903609625, guid: f1aa92239685f164d9f2b7689ccebb03, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 24.561943
+      value: 32.545876
       objectReference: {fileID: 0}
     - target: {fileID: 3770244978903609625, guid: f1aa92239685f164d9f2b7689ccebb03, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -63.34582
+      value: -583.339
       objectReference: {fileID: 0}
     - target: {fileID: 3770244978903609625, guid: f1aa92239685f164d9f2b7689ccebb03, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9686837
+      value: 0.010231323
       objectReference: {fileID: 0}
     - target: {fileID: 3770244978903609625, guid: f1aa92239685f164d9f2b7689ccebb03, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.2236129
+      value: 0.005042396
       objectReference: {fileID: 0}
     - target: {fileID: 3770244978903609625, guid: f1aa92239685f164d9f2b7689ccebb03, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.1052814
+      value: 0.8922733
       objectReference: {fileID: 0}
     - target: {fileID: 3770244978903609625, guid: f1aa92239685f164d9f2b7689ccebb03, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.023770275
+      value: -0.4513516
       objectReference: {fileID: 0}
     - target: {fileID: 5227898324358821237, guid: f1aa92239685f164d9f2b7689ccebb03, type: 3}
       propertyPath: m_Name
@@ -974,7 +986,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8476848959334643931, guid: f1aa92239685f164d9f2b7689ccebb03, type: 3}
       propertyPath: field of view
-      value: 80
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1760,7 +1772,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 34bf3ab901ce83b40855b7fd127f665b, type: 2}
+  m_Material: {fileID: 2100000, guid: 0bd3f891e6e649645b58783570b5a0d2, type: 2}
   m_DrawDistance: 1000
   m_FadeScale: 0.9
   m_StartAngleFade: 180
@@ -1862,7 +1874,7 @@ GameObject:
   - component: {fileID: 4600365206270832530}
   - component: {fileID: 4498115256784295776}
   m_Layer: 6
-  m_Name: NormalTile_24
+  m_Name: StarTile_24
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

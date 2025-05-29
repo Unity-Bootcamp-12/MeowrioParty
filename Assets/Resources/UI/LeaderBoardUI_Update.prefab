@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55b5ba16881930145884fe332ff9b68b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UIOpenAnim: {fileID: 0}
+  m_isAnimPlay: 0
   StarCountTxt:
   - {fileID: 5307663231934681208}
   - {fileID: 2212134325349390572}

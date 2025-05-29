@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileType: 2
-  tileIndex: 6
+  tileIndex: 16
   eventParam: 5
   MoveTo: {fileID: 0}
 --- !u!1 &1004695753923221963
@@ -1148,7 +1148,7 @@ GameObject:
   - component: {fileID: 6973949208799342054}
   - component: {fileID: 1173900160777922052}
   m_Layer: 0
-  m_Name: NormalTile_24
+  m_Name: StarTile_24
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1203,7 +1203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba8eb544decd94c44b8c95b4ffd7c1e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileType: 0
+  tileType: 3
   tileIndex: 24
   eventParam: 0
   MoveTo: {fileID: 0}
