@@ -403,7 +403,7 @@ GameObject:
   - component: {fileID: 1911251142581921273}
   - component: {fileID: 7945244289718200461}
   m_Layer: 6
-  m_Name: NormalTile_24
+  m_Name: StarTile_24
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -436,7 +436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 34bf3ab901ce83b40855b7fd127f665b, type: 2}
+  m_Material: {fileID: 2100000, guid: 0bd3f891e6e649645b58783570b5a0d2, type: 2}
   m_DrawDistance: 1000
   m_FadeScale: 0.9
   m_StartAngleFade: 180

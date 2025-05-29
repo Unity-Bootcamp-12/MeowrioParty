@@ -105,6 +105,7 @@ public class BoardManager : NetSingleton<BoardManager>
     private void OnInitializeDone_StartOpeningSequenceRpc()
     {
         CameraManager.Instance.ChangeCamera(CameraType.Board);
+        SoundManager.Instance.PlayBGM(BGMType.GameBGM);
         //UIManager.Instance.OpenNoticeUISec("파티 시작!", 3f);
         StartCoroutine(UIManager.Instance.OpenNoticeUIEveryoneSecCo("파티 시작!", 3f));
         StartCoroutine(OpeningCo());
@@ -431,7 +432,7 @@ public class BoardManager : NetSingleton<BoardManager>
             NoticeEveryoneRpc("우승!!");
 
             _playerCtrlMap[(ulong)winnerClientId].PlayAnimationRpc("Victory");
-
+            SoundManager.Instance.PlaySFX(SFXType.Clear);
 
             _currentState.Value = GameState.GameEnd;
             return;

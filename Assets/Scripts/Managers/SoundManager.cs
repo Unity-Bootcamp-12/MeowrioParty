@@ -63,18 +63,20 @@ public class SoundManager : Singleton<SoundManager>
     }
     public void PlayBGM(BGMType type)
     {
-        if (_isInitialized)
+        if (!_isInitialized)
         {
             Init();
         }
 
         _bgmSource.clip = _bgmClips[type];
         _bgmSource.loop = true;
+        _bgmSource.playOnAwake = false;       
         _bgmSource.Play();
+        _bgmSource.volume = 0.5f;
     }
     public void PlaySFX(SFXType type)
     {
-        if (_isInitialized)
+        if (!_isInitialized)
         {
             Init();
         }
@@ -88,5 +90,5 @@ public enum BGMType
 }
 public enum SFXType
 {
-    Coin, Star, RollingDice, StopDice, Click, Cancle
+    Coin, Star, RollingDice, StopDice, Click, Cancle, Clear
 }
